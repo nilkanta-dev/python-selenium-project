@@ -3,6 +3,8 @@ from selenium import webdriver
 import logging
 import os
 from dotenv import load_dotenv
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 load_dotenv()
 
@@ -51,7 +53,24 @@ def driver():
 # 	yield driver
 # 	driver.quit()
 
-	
+#------------FOR TESTING WITH JENKINS-----------#
+
+@pytest.fixture(params=["chrome"])
+def driver(request):
+	grid_url = os.environ.get("SELENIUM_URL","http://selenium-standalone-chrome:4444/wd/hub")
+
+	if request.param == "chrome":
+		options = Options()
+		options.add_argument("--headless=new")
+		driver.webdriver.Remote(command_executor=grid_url,options=options)
+	elif request.param == "firefox":
+		options = FirefoxOptions()
+		options.add_argument("--headless")
+		driver = webdriver.Remote(command_executor=grid_url,options=options)
+
+	driver.maximize_window()
+	yield driver
+	driver.quit()
 
 @pytest.fixture()
 
