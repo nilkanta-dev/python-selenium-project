@@ -1,0 +1,7 @@
+selenium==4.36.0
+python-dotenv==1.1.1
+pytest==8.4.2
+pytest-html==4.1.1
+pytest-xdist==3.8.0
+urllib3==2.5.0
+
