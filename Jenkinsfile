@@ -1,5 +1,10 @@
 pipeline {
-  agent any  
+  agent {
+    docker {
+      image 'python:3.12-slim'   // or any Python version you need
+      args '-v /var/jenkins_home:/var/jenkins_home'
+    }
+  }
 
   environment {
     SELENIUM_URL = 'http://selenium-standalone-chrome:4444/wd/hub'
@@ -7,7 +12,6 @@ pipeline {
   }
 
   stages {
-
     stage('Checkout') {
       steps {
         checkout scm
@@ -17,7 +21,7 @@ pipeline {
     stage('Prepare Python Environment') {
       steps {
         sh '''
-          python3 -m venv $VENV
+          python -m venv $VENV
           . $VENV/bin/activate
           pip install --upgrade pip
           if [ -f requirements.txt ]; then
@@ -40,18 +44,10 @@ pipeline {
       }
       post {
         always {
-          echo "Archiving reports and screenshots..."
           archiveArtifacts artifacts: 'reports/**, screenshots/**', allowEmptyArchive: true
           junit 'reports/junit-results.xml'
         }
       }
-    }
-
-  }
-
-  post {
-    always {
-      echo "Pipeline finished."
     }
   }
 }
