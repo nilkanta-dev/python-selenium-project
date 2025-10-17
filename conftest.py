@@ -62,7 +62,7 @@ def driver(request):
 	if request.param == "chrome":
 		options = Options()
 		options.add_argument("--headless=new")
-		driver.webdriver.Remote(command_executor=grid_url,options=options)
+		driver = webdriver.Remote(command_executor=grid_url,options=options)
 	elif request.param == "firefox":
 		options = FirefoxOptions()
 		options.add_argument("--headless")
