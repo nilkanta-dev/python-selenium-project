@@ -57,15 +57,23 @@ def driver():
 
 @pytest.fixture(params=["chrome"])
 def driver(request):
-    grid_url = os.environ.get("SELENIUM_URL","http://selenium-standalone-chrome:4444/wd/hub")
+    grid_url = "http://selenium-standalone-chrome:4444/wd/hub"
+
+    # Wait for Selenium to be ready
+    for _ in range(30):
+        try:
+            r = requests.get(f"{grid_url}/status")
+            if r.status_code == 200:
+                break
+        except requests.exceptions.RequestException:
+            pass
+        time.sleep(1)
+    else:
+        raise RuntimeError("Selenium Grid not ready")
 
     if request.param == "chrome":
         options = Options()
         options.add_argument("--headless=new")
-        driver = webdriver.Remote(command_executor=grid_url, options=options)  # <--- assign here
-    elif request.param == "firefox":
-        options = FirefoxOptions()
-        options.add_argument("--headless")
         driver = webdriver.Remote(command_executor=grid_url, options=options)
 
     driver.maximize_window()
