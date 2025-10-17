@@ -2,6 +2,7 @@ pipeline {
     agent {
         docker {
             image 'python:3.12-slim'   // You can change to another Python version if needed
+            args '--network jenkins-network'
         }
     }
 
