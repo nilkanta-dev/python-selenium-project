@@ -5,6 +5,8 @@ import os
 from dotenv import load_dotenv
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
+import time
+import requests
 
 load_dotenv()
 
