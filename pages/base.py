@@ -13,18 +13,19 @@ class BasePage:
 
 
 	def click_element(self,locator,retries=2):
+
 		for attempt in range(retries):
 			try:
-		    	element = self.wait.until(EC.element_to_be_clickable(locator))
-		    	self.driver.execute_script("arguments[0].scrollIntoView(true);",element)
-		    	ActionChains(self.driver).move_to_element(element).perform()
-		    	element.click()
+				element = self.wait.until(EC.element_to_be_clickable(locator))
+				self.driver.execute_script("arguments[0].scrollIntoView(true);",element)
+				ActionChains(self.driver).move_to_element(element).perform()
+				element.click()
 
 			except Exception as e:
 				self.driver.save_screenshot("click_intercepted_error.png")
 				print(f"Attempt {attempt + 1} failed:{e}")
 				if attempt == retries - 1:
-				raise
+					raise
 		
 
 	def input_text(self,locator,text):
