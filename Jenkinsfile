@@ -2,8 +2,7 @@ pipeline {
   agent {
     docker {
       image 'python:3.12-slim'   // or any Python version you need
-      args '-v /var/jenkins_home:/var/jenkins_home'
-    }
+      args '-u 0 -v /var/jenkins_home:/var/jenkins_home'    }
   }
 
   environment {
