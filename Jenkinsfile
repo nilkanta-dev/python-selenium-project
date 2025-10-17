@@ -7,7 +7,7 @@ pipeline {
 
   environment {
     SELENIUM_URL = 'http://selenium-standalone-chrome:4444/wd/hub'
-    VENV = ".venv"
+    VENV = "/tmp/venv"
   }
 
   stages {
