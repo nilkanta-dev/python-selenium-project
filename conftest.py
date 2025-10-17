@@ -3,7 +3,7 @@ from selenium import webdriver
 import logging
 import os
 from dotenv import load_dotenv
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 import time
 import requests
@@ -13,14 +13,14 @@ load_dotenv()
 logging.basicConfig(level=logging.INFO)
 
 #-----FOR LOCAL TESTING------#
-@pytest.fixture()
+# @pytest.fixture()
 
-def driver():
+# def driver():
 	
-	driver = webdriver.Firefox()
-	driver.maximize_window()
-	yield driver
-	driver.quit()
+# 	driver = webdriver.Firefox()
+# 	driver.maximize_window()
+# 	yield driver
+# 	driver.quit()
 
 
 #---------FOR LOCAL PARALLEL TESTING---------------#
@@ -61,6 +61,7 @@ def driver():
 def driver(request):
     grid_url = "http://selenium-standalone-chrome:4444/wd/hub"
 
+
     # Wait for Selenium to be ready
     for _ in range(30):
         try:
@@ -73,10 +74,17 @@ def driver(request):
     else:
         raise RuntimeError("Selenium Grid not ready")
 
+	
+
+
     if request.param == "chrome":
-        options = Options()
+        options = ChromeOptions()
         options.add_argument("--headless=new")
         driver = webdriver.Remote(command_executor=grid_url, options=options)
+    elif request.param == "firefox":
+    	options = FirefoxOptions()
+    	options.add_argument("--headless")
+    	driver = webdriver.Remote(command_executor=grid_url,options=options)
 
     driver.maximize_window()
     yield driver
