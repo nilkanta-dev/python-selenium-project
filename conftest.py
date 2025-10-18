@@ -76,7 +76,6 @@ def driver(request):
 
 	
 
-
     if request.param == "chrome":
         options = ChromeOptions()
         options.add_argument("--headless=new")
