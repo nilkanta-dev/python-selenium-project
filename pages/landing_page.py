@@ -5,7 +5,7 @@ from pages.base import BasePage
 
 class LandingPage(BasePage):
 
-	ADD_TO_CART = (By.CSS_SELECTOR,"[data-product-id='1']")
+	ADD_TO_CART = (By.CSS_SELECTOR,"a[data-product-id='1']")
 	PRODUCT_DETAIL = (By.LINK_TEXT,"View Product")
 	DISMISS_MODAL = (By.CSS_SELECTOR,"button[data-dismiss='modal']")
 

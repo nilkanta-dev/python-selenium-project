@@ -1,10 +1,13 @@
 from selenium import webdriver
 from pages.landing_page import LandingPage
 from pages.login import LoginPage
+from pages.cart import CartPage
+from pages.cdp_utils import CDPTools
 
 class Shopping:
 	def __init__(self,teardown=True):
 		self.driver = webdriver.Firefox()
+		# self.driver = webdriver.Chrome()
 		self.teardown = teardown
 		self.driver.maximize_window()
 
@@ -27,3 +30,15 @@ class Shopping:
 		self.login.login_url()
 		self.login.register()
 		self.login.login()
+
+	def cart_page(self):
+		self.cart = CartPage(self.driver)
+		self.cart.go_to_cart()
+		self.cart.remove_item()
+
+	def use_cdp_tools(self):
+		self.cdp = CDPTools(self.driver)
+		self.cdp.enable_network()
+		self.cdp.take_full_screenshot()
+		self.cdp.get_performance_metrics()
+
