@@ -6,9 +6,20 @@ A complete end-to-end Selenium test automation framework built using **Python**,
 
 ## Overview
 
-This project automates the test cases of [automationexercise.com](https://automationexercise.com) using a **Page Object Model (POM)** design.  
+This project automates few test cases of [automationexercise.com](https://automationexercise.com) using a **Page Object Model (POM)** design.  
 It supports **local**, **remote (Selenium Grid)**, and **CI/CD pipeline** executions.  
 The framework is containerized with **Docker Compose**, making it easy to spin up a full test environment with Jenkins and Selenium Grid nodes.
+
+---
+## What it automates?
+
+- **Opens [automationexercise.com](https://automationexercise.com)**
+- **Add a product to cart**
+- **Opens product detail page**
+- **Creates a new user from the registration form**
+- **Can log in with the registered user**
+- **Can test invalid login with wrong users**
+- **Removes items from the cart after a user logs in**
 
 ---
 
